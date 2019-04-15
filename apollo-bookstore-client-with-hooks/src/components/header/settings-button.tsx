@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import IconButton from '@material-ui/core/IconButton';
 import Settings from '@material-ui/icons/Settings';
-import { inject } from 'mobx-react';
-import { RootStore } from '../../stores';
+import { rootContext } from '../../stores';
 
-export interface SettingsButtonProps {
-    rootStore?: RootStore;
-}
+export const SettingsButton = () => {
+    const rootStore = useContext(rootContext);
 
-const SettingsButtonBase = ({ rootStore }: SettingsButtonProps) => {
     return (
         <IconButton
             color="inherit"
@@ -22,5 +19,3 @@ const SettingsButtonBase = ({ rootStore }: SettingsButtonProps) => {
         </IconButton>
     );
 };
-
-export const SettingsButton = inject('rootStore')(SettingsButtonBase);

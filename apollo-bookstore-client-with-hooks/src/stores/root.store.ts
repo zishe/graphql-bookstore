@@ -1,3 +1,4 @@
+import { createContext } from 'react';
 import { RouterState, RouterStore } from 'mobx-state-router';
 import { routes } from './routes';
 
@@ -8,3 +9,5 @@ export class RootStore {
 }
 
 export const rootStore = new RootStore();
+
+export const rootContext = createContext(rootStore);

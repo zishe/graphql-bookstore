@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import IconButton from '@material-ui/core/IconButton';
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import Apps from '@material-ui/icons/Apps';
-import { inject } from 'mobx-react';
-import { RootStore } from '../../stores';
+import { rootContext } from '../../stores';
 
 const styles = () =>
     createStyles({
@@ -13,11 +12,11 @@ const styles = () =>
         }
     });
 
-export interface HomeButtonProps extends WithStyles<typeof styles> {
-    rootStore?: RootStore;
-}
+export interface HomeButtonProps extends WithStyles<typeof styles> {}
 
-const HomeButtonBase = ({ classes, rootStore }: HomeButtonProps) => {
+const HomeButtonBase = ({ classes }: HomeButtonProps) => {
+    const rootStore = useContext(rootContext);
+
     return (
         <IconButton
             className={classes.root}
@@ -32,6 +31,4 @@ const HomeButtonBase = ({ classes, rootStore }: HomeButtonProps) => {
     );
 };
 
-export const HomeButton = withStyles(styles)(
-    inject('rootStore')(HomeButtonBase)
-);
+export const HomeButton = withStyles(styles)(HomeButtonBase);

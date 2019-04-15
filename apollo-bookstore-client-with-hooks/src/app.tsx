@@ -7,7 +7,6 @@ import { split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
-import { Provider } from 'mobx-react';
 import { HistoryAdapter } from 'mobx-state-router';
 import { ApolloProvider } from 'react-apollo-hooks';
 import { ErrorBoundary, getTheme } from './components';
@@ -62,9 +61,7 @@ export const App = () => {
         <ErrorBoundary>
             <ApolloProvider client={client}>
                 <MuiThemeProvider theme={theme}>
-                    <Provider rootStore={rootStore}>
-                        <Shell />
-                    </Provider>
+                    <Shell />
                 </MuiThemeProvider>
             </ApolloProvider>
         </ErrorBoundary>

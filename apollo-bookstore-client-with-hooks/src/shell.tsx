@@ -1,14 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useContext } from 'react';
 
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { inject } from 'mobx-react';
 import { RouterView, ViewMap } from 'mobx-state-router';
 import { Loading } from './components';
 import { HomePage } from './pages/home-page';
 import { NotFoundPage } from './pages/not-found-page';
 import { SettingsPage } from './pages/settings-page';
-import { RootStore } from './stores';
+import { rootContext } from './stores';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -54,21 +53,19 @@ const viewMap: ViewMap = {
     settings: <SettingsPage />
 };
 
-export interface ShellProps extends WithStyles<typeof styles> {
-    rootStore?: RootStore;
-}
+export interface ShellProps extends WithStyles<typeof styles> {}
 
-export const Shell = withStyles(styles)(
-    inject('rootStore')(({ classes, rootStore }: ShellProps) => {
-        return (
-            <div className={classes.root}>
-                <Suspense fallback={<Loading />}>
-                    <RouterView
-                        routerStore={rootStore!.routerStore}
-                        viewMap={viewMap}
-                    />
-                </Suspense>
-            </div>
-        );
-    })
-);
+export const Shell = withStyles(styles)(({ classes }: ShellProps) => {
+    const rootStore = useContext(rootContext);
+
+    return (
+        <div className={classes.root}>
+            <Suspense fallback={<Loading />}>
+                <RouterView
+                    routerStore={rootStore!.routerStore}
+                    viewMap={viewMap}
+                />
+            </Suspense>
+        </div>
+    );
+});
